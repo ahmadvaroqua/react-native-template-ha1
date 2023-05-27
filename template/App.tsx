@@ -78,7 +78,7 @@ function App(): JSX.Element {
           }}>
 
           <Section title="Test Template">
-            This is a test. v1
+            This is a test. v1.2
           </Section>
 
         </View>
