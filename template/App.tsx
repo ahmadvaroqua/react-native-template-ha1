@@ -25,9 +25,30 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
+
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home!</Text>
+    </View>
+  );
+}
+
+function SettingsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Settings!</Text>
+    </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
 
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -63,27 +84,27 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
 
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelPosition: "beside-icon",
+          tabBarLabelStyle: {
+            fontWeight: "400",
+            fontSize: 12
+          },
+          tabBarIconStyle: { display: "none" },
 
-          <Section title="Test Template">
-            This is a test. v1.2
-          </Section>
+          tabBarActiveTintColor: '#333333',
+          tabBarInactiveTintColor: '#c0c0c0',
 
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+
   );
 }
 
