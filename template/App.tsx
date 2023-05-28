@@ -36,7 +36,31 @@ type SectionProps = PropsWithChildren<{
 function HomeScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
+      <Text>Home</Text>
+    </View>
+  );
+}
+
+function SearchScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Search</Text>
+    </View>
+  );
+}
+
+function PostScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Post</Text>
+    </View>
+  );
+}
+
+function ProfileScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Profile</Text>
     </View>
   );
 }
@@ -44,7 +68,7 @@ function HomeScreen() {
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
+      <Text>Settings</Text>
     </View>
   );
 }
@@ -96,8 +120,9 @@ function App(): JSX.Element {
 
           tabBarLabelStyle: {
             fontWeight: "400",
-            fontSize: 11,
-            marginBottom: 5
+            fontSize: 10,
+            marginBottom: 5,
+            display: 'none',
 
           },
 
@@ -111,22 +136,82 @@ function App(): JSX.Element {
         <Tab.Screen name="Home" component={HomeScreen}
 
           options={{
-            title: 'Home 2',
+            title: 'Home',
             tabBarIcon: ({size, focused, color}) => {
               return (
                 <Image
-                  style={{ width: 15, height: 15 }}
-                  source={{
-                    uri:
-                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                  }}
+                  style={{ width: 20, height: 20 }}
+                  source={focused? require('./src/assets/icons/Icon-Home.png') : require('./src/assets/icons/Icon-Home-Inactive.png')}
                 />
               );
             },
           }}
 
         />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+
+        <Tab.Screen name="Search" component={SearchScreen}
+
+          options={{
+            title: 'Search',
+            tabBarIcon: ({size, focused, color}) => {
+              return (
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={focused? require('./src/assets/icons/Icon-Search.png') : require('./src/assets/icons/Icon-Search-Inactive.png')}
+                />
+              );
+            },
+          }}
+
+        />
+
+        <Tab.Screen name="Post" component={PostScreen}
+
+          options={{
+            title: 'Post',
+            tabBarIcon: ({size, focused, color}) => {
+              return (
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={focused? require('./src/assets/icons/Icon-Post.png') : require('./src/assets/icons/Icon-Post-Inactive.png')}
+                />
+              );
+            },
+          }}
+
+        />
+
+        <Tab.Screen name="Profile" component={ProfileScreen}
+
+          options={{
+            title: 'Profile',
+            tabBarIcon: ({size, focused, color}) => {
+              return (
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={focused? require('./src/assets/icons/Icon-User.png') : require('./src/assets/icons/Icon-User-Inactive.png')}
+                />
+              );
+            },
+          }}
+
+        />
+
+        <Tab.Screen name="Settings" component={SettingsScreen}
+
+          options={{
+            title: 'Settings',
+            tabBarIcon: ({size, focused, color}) => {
+              return (
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={focused? require('./src/assets/icons/Icon-Settings.png') : require('./src/assets/icons/Icon-Settings-Inactive.png')}
+                />
+              );
+            },
+          }}
+
+        />
       </Tab.Navigator>
     </NavigationContainer>
 
