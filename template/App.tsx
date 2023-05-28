@@ -15,6 +15,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Image,
 } from 'react-native';
 
 import {
@@ -87,20 +88,44 @@ function App(): JSX.Element {
 
     <NavigationContainer>
       <Tab.Navigator
-        screenOptions={{
-          tabBarLabelPosition: "beside-icon",
+
+        screenOptions={({ route }) => ({
+
+          // tabBarLabelPosition: "beside-icon",
+          tabBarLabelPosition: "below-icon",
+
           tabBarLabelStyle: {
             fontWeight: "400",
-            fontSize: 12
-          },
-          tabBarIconStyle: { display: "none" },
+            fontSize: 11,
+            marginBottom: 5
 
+          },
+
+          // tabBarIconStyle: { display: "none" },
           tabBarActiveTintColor: '#333333',
           tabBarInactiveTintColor: '#c0c0c0',
 
-        }}
+        })}
+
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={HomeScreen}
+
+          options={{
+            title: 'Home 2',
+            tabBarIcon: ({size, focused, color}) => {
+              return (
+                <Image
+                  style={{ width: 15, height: 15 }}
+                  source={{
+                    uri:
+                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                  }}
+                />
+              );
+            },
+          }}
+
+        />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
