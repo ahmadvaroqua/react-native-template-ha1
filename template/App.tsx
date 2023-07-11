@@ -41,17 +41,30 @@ function HomeScreen() {
 
   const {data, isLoading} = UseGetAllPosts();
 
+  const ListHeader = () => {
+    return (
+      <View style={{}}>
+        <Text style={{ padding: 10, fontSize: 20}}>Me the header</Text>
+      </View>
+
+    )
+  }
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start', borderWidth: 0, borderColor: 'red', backgroundColor: 'white' }}>
+
+      <Text style={{ padding: 30, fontSize: 30, fontWeight: 700 }}>Home</Text>
 
       {isLoading ? (
         <Text>Loading...</Text>
       ) : data ? (
         <FlatList
           data={data.records}
-          renderItem={({item}) => <Text>{item.quip}</Text>}
+          renderItem={({item}) => <Text style={{ borderWidth: 0, borderColor: 'blue', padding: 10 }}>{item.quip}</Text>}
           keyExtractor={(item) => item.id}
+          style={{ borderWidth: 0, borderColor: 'black', width: "100%", padding: 20}}
+          ListHeaderComponent={ListHeader}
+
         />
       ) : (
         <Text>Whoops No Data Available</Text>
