@@ -16,6 +16,7 @@ import {
   useColorScheme,
   View,
   Image,
+  FlatList
 } from 'react-native';
 
 import {
@@ -28,16 +29,36 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import { UseGetAllPosts } from './src/hooks/getAllPostsQuery';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 function HomeScreen() {
+
+  const {data, isLoading} = UseGetAllPosts();
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home</Text>
+
+      {isLoading ? (
+        <Text>Loading...</Text>
+      ) : data ? (
+        <FlatList
+          data={data.records}
+          renderItem={({item}) => <Text>{item.quip}</Text>}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <Text>Whoops No Data Available</Text>
+      )}
+
     </View>
+
   );
 }
 
@@ -101,6 +122,8 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
+const queryClient = new QueryClient();
+
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -110,110 +133,112 @@ function App(): JSX.Element {
 
   return (
 
-    <NavigationContainer>
-      <Tab.Navigator
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <Tab.Navigator
 
-        screenOptions={({ route }) => ({
+          screenOptions={({ route }) => ({
 
-          // tabBarLabelPosition: "beside-icon",
-          tabBarLabelPosition: "below-icon",
+            // tabBarLabelPosition: "beside-icon",
+            tabBarLabelPosition: "below-icon",
 
-          tabBarLabelStyle: {
-            fontWeight: "400",
-            fontSize: 10,
-            marginBottom: 5,
-            display: 'none',
+            tabBarLabelStyle: {
+              fontWeight: "400",
+              fontSize: 10,
+              marginBottom: 5,
+              display: 'none',
 
-          },
-
-          // tabBarIconStyle: { display: "none" },
-          tabBarActiveTintColor: '#333333',
-          tabBarInactiveTintColor: '#c0c0c0',
-
-        })}
-
-      >
-        <Tab.Screen name="Home" component={HomeScreen}
-
-          options={{
-            title: 'Home',
-            tabBarIcon: ({size, focused, color}) => {
-              return (
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={focused? require('./src/assets/icons/Icon-Home.png') : require('./src/assets/icons/Icon-Home-Inactive.png')}
-                />
-              );
             },
-          }}
 
-        />
+            // tabBarIconStyle: { display: "none" },
+            tabBarActiveTintColor: '#333333',
+            tabBarInactiveTintColor: '#c0c0c0',
 
-        <Tab.Screen name="Search" component={SearchScreen}
+          })}
 
-          options={{
-            title: 'Search',
-            tabBarIcon: ({size, focused, color}) => {
-              return (
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={focused? require('./src/assets/icons/Icon-Search.png') : require('./src/assets/icons/Icon-Search-Inactive.png')}
-                />
-              );
-            },
-          }}
+        >
+          <Tab.Screen name="Home" component={HomeScreen}
 
-        />
+            options={{
+              title: 'Home',
+              tabBarIcon: ({size, focused, color}) => {
+                return (
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    source={focused? require('./src/assets/icons/Icon-Home.png') : require('./src/assets/icons/Icon-Home-Inactive.png')}
+                  />
+                );
+              },
+            }}
 
-        <Tab.Screen name="Post" component={PostScreen}
+          />
 
-          options={{
-            title: 'Post',
-            tabBarIcon: ({size, focused, color}) => {
-              return (
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={focused? require('./src/assets/icons/Icon-Post.png') : require('./src/assets/icons/Icon-Post-Inactive.png')}
-                />
-              );
-            },
-          }}
+          <Tab.Screen name="Search" component={SearchScreen}
 
-        />
+            options={{
+              title: 'Search',
+              tabBarIcon: ({size, focused, color}) => {
+                return (
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    source={focused? require('./src/assets/icons/Icon-Search.png') : require('./src/assets/icons/Icon-Search-Inactive.png')}
+                  />
+                );
+              },
+            }}
 
-        <Tab.Screen name="Profile" component={ProfileScreen}
+          />
 
-          options={{
-            title: 'Profile',
-            tabBarIcon: ({size, focused, color}) => {
-              return (
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={focused? require('./src/assets/icons/Icon-User.png') : require('./src/assets/icons/Icon-User-Inactive.png')}
-                />
-              );
-            },
-          }}
+          <Tab.Screen name="Post" component={PostScreen}
 
-        />
+            options={{
+              title: 'Post',
+              tabBarIcon: ({size, focused, color}) => {
+                return (
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    source={focused? require('./src/assets/icons/Icon-Post.png') : require('./src/assets/icons/Icon-Post-Inactive.png')}
+                  />
+                );
+              },
+            }}
 
-        <Tab.Screen name="Settings" component={SettingsScreen}
+          />
 
-          options={{
-            title: 'Settings',
-            tabBarIcon: ({size, focused, color}) => {
-              return (
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={focused? require('./src/assets/icons/Icon-Settings.png') : require('./src/assets/icons/Icon-Settings-Inactive.png')}
-                />
-              );
-            },
-          }}
+          <Tab.Screen name="Profile" component={ProfileScreen}
 
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+            options={{
+              title: 'Profile',
+              tabBarIcon: ({size, focused, color}) => {
+                return (
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    source={focused? require('./src/assets/icons/Icon-User.png') : require('./src/assets/icons/Icon-User-Inactive.png')}
+                  />
+                );
+              },
+            }}
+
+          />
+
+          <Tab.Screen name="Settings" component={SettingsScreen}
+
+            options={{
+              title: 'Settings',
+              tabBarIcon: ({size, focused, color}) => {
+                return (
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    source={focused? require('./src/assets/icons/Icon-Settings.png') : require('./src/assets/icons/Icon-Settings-Inactive.png')}
+                  />
+                );
+              },
+            }}
+
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </QueryClientProvider>
 
   );
 }
