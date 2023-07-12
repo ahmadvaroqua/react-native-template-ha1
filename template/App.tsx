@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -19,6 +12,7 @@ import {
   FlatList
 } from 'react-native';
 
+// TODO: Darkmode nonsense, clean up
 import {
   Colors,
   DebugInstructions,
@@ -27,85 +21,24 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+// Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+// React Query
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UseGetAllPosts } from './src/hooks/getAllPostsQuery';
+
+// Screens
+import HomeScreen from './src/screens/Home';
+import SearchScreen from './src/screens/Search';
+import PostScreen from './src/screens/Post';
+import ProfileScreen from './src/screens/Profile';
+import SettingsScreen from './src/screens/Settings';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
-
-function HomeScreen() {
-
-  const {data, isLoading} = UseGetAllPosts();
-
-  const ListHeader = () => {
-    return (
-      <View style={{}}>
-        <Text style={{ padding: 10, fontSize: 20}}>Me the header</Text>
-      </View>
-
-    )
-  }
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start', borderWidth: 0, borderColor: 'red', backgroundColor: 'white' }}>
-
-      <Text style={{ padding: 30, fontSize: 30, fontWeight: 700 }}>Home</Text>
-
-      {isLoading ? (
-        <Text>Loading...</Text>
-      ) : data ? (
-        <FlatList
-          data={data.records}
-          renderItem={({item}) => <Text style={{ borderWidth: 0, borderColor: 'blue', padding: 10 }}>{item.quip}</Text>}
-          keyExtractor={(item) => item.id}
-          style={{ borderWidth: 0, borderColor: 'black', width: "100%", padding: 20}}
-          ListHeaderComponent={ListHeader}
-
-        />
-      ) : (
-        <Text>Whoops No Data Available</Text>
-      )}
-
-    </View>
-
-  );
-}
-
-function SearchScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Search</Text>
-    </View>
-  );
-}
-
-function PostScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Post</Text>
-    </View>
-  );
-}
-
-function ProfileScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
