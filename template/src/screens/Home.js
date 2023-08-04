@@ -16,7 +16,6 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UseGetAllPosts } from '../hooks/getAllPostsQuery';
 
-
 function HomeScreen() {
 
   const {data, isLoading} = UseGetAllPosts();

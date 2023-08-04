@@ -1,0 +1,80 @@
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import axios from 'axios';
+
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+  Image,
+  FlatList,
+  TextInput,
+  Button,
+  Alert,
+} from 'react-native';
+
+// React Query
+import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query';
+
+function PostScreen() {
+
+  const [text, onChangeText] = React.useState('');
+
+  const mutation = useMutation({
+    mutationFn: (newPost) => {
+      return axios.post('https://dev1.humanagencyinc.com/react-tests/api.php/records/quips ', newPost)
+    },
+  })
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Post</Text>
+
+      <TextInput
+        style={{ borderWidth: 1, padding: 10, width: 200, }}
+        onChangeText={onChangeText}
+        value={text}
+        placeholder="Post something!"
+      />
+
+      <Button
+        // onPress={() => Alert.alert('Right button pressed')}
+        // onPress={() => Alert.alert(text)}
+
+        onClick={() => {
+          mutation.mutate({ quip: text })
+        }}
+
+        title="Post"
+        color="#841584"
+      />
+
+    {
+      mutation.isLoading ? (
+
+        <Text>Adding Post</Text>
+
+      ) : (
+
+        <>
+        { mutation.isError ? (
+          <Text>An error occurred: {mutation.error.message}</Text>
+        ) : null}
+
+        { mutation.isSuccess ? (
+          <Text>Success. Post added. Hooray.</Text>
+        ) : null}
+        </>
+
+      )
+    }
+
+    </View>
+  );
+}
+
+export default PostScreen;
