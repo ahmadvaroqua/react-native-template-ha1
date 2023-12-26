@@ -1,0 +1,27 @@
+{
+  "name": "react-native-template-ha1",
+  "version": "0.0.1",
+  "description": "Human Agency RN Basic Template",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "files": [
+    "template",
+    "template.config.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmadvaroqua/react-native-template-ha1.git"
+  },
+  "keywords": [
+    "react-native",
+    "template",
+    "boilerplate"
+  ],
+  "author": "Ahmad Varoqua <ahmad@humanagencyinc.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ahmadvaroqua/react-native-template-ha1/issues"
+  },
+  "homepage": "https://github.com/ahmadvaroqua/react-native-template-ha1/#readme"
+}
